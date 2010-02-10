@@ -17,13 +17,25 @@ class SphinxSearchExtension < Spree::Extension
     require 'thinking_sphinx'
     require 'thinking_sphinx/raspell'
     
+    Spree::Config.set(:product_price_ranges => 
+                      ["Under $25", "$25 to $50", "$50 to $100", "$100 to $200", "$200 and above"])
+    
+    price_sql = <<-eos
+      IF(price < 25, 0, 
+        IF(price < 50, 1,
+          IF(price < 100, 2,
+            IF(price < 200, 3, 4))))
+eos
+    price_sql = price_sql.gsub("\n", ' ').gsub('  ', '')
+    
     Product.class_eval do
       define_index do
         indexes :name
         indexes :description
         indexes taxons.name, :as => :taxon, :facet => true
-
-        has master.price, :as => :price
+        
+        has price_sql, :as => :price_range, :type => :integer, :facet => true
+        has master.price, :as => :price, :type => :float
       end
     end
     
