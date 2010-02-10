@@ -10,17 +10,19 @@ class SphinxSearchExtension < Spree::Extension
 
   def self.require_gems(config)
     config.gem 'thinking-sphinx', :lib => false, :version => '1.3.15'
+    config.gem 'thinking-sphinx-raspell', :lib => false, :version => '1.1.0'
   end
   
   def activate
     require 'thinking_sphinx'
+    require 'thinking_sphinx/raspell'
     
     Product.class_eval do
       define_index do
         indexes :name
         indexes :description
         indexes taxons.name, :as => :taxon, :facet => true
-        
+
         has master.price, :as => :price
       end
     end
