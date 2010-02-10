@@ -25,6 +25,10 @@ class SphinxSearchExtension < Spree::Extension
       end
     end
     
+    Spree::BaseController.class_eval do
+      helper :sphinx
+    end
+    
     Spree::Config.searcher = Spree::Search::ThinkingSphinx.new 
   end
 end

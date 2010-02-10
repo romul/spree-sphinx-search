@@ -10,11 +10,12 @@ module Spree::Search
       if facets_hash
         search_options.merge!(:conditions => facets_hash)
       end
+
       facets = Product.facets(query, search_options)
-      products = facets.for(facets_hash)
+      products = facets.for
       
       @properties[:products] = products
-      @properties[:facets] = facets
+      @properties[:facets] = parse_facets_hash(facets)
       {:conditions=> ["products.id IN (?)", products.map(&:id)]}
     end
 
@@ -26,5 +27,38 @@ module Spree::Search
       @properties[:manage_pagination] = true
       @properties[:order_by_price] = params[:order_by_price]
     end
+
+    private
+    
+    def parse_facets_hash(facets_hash = {})
+      facets = []
+      facets_hash.each do |name, options|
+        next if options.size <= 1
+        facet = Facet.new(name)
+        options.each do |value, count|
+          facet.options << FacetOption.new(value, count)
+        end
+        facets << facet
+      end
+      facets
+    end
+  end
+  
+  class Facet
+    attr_accessor :options
+    attr_accessor :name
+    def initialize(name, options = [])
+      self.name = name
+      self.options = options
+    end
+  end
+  
+  class FacetOption
+    attr_accessor :name
+    attr_accessor :count
+    def initialize(name, count)
+      self.name = name
+      self.count = count
+    end    
   end
 end
