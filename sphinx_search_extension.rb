@@ -34,6 +34,7 @@ eos
         indexes :description
         indexes taxons.name, :as => :taxon, :facet => true
         
+        has taxons(:id), :as => :taxon_ids
         has price_sql, :as => :price_range, :type => :integer, :facet => true
         has master.price, :as => :price, :type => :float
       end
