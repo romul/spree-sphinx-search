@@ -38,6 +38,7 @@ module Spree::Search
         next if options.size <= 1
         facet = Facet.new(name)
         options.each do |value, count|
+          next if value.blank?
           facet.options << FacetOption.new(value, count)
         end
         facets << facet
