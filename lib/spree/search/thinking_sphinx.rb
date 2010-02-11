@@ -10,9 +10,13 @@ module Spree::Search
       if facets_hash
         search_options.merge!(:conditions => facets_hash)
       end
+      with_opts = {:is_active => 1}
       if taxon
-        search_options.merge!(:with => {:taxon_ids => taxon.self_and_descendants.map(&:id)})
-      end 
+        taxon_ids = taxon.self_and_descendants.map(&:id)
+        with_opts.merge(:taxon_ids => taxon_ids)
+      end
+      search_options.merge!(:with => with_opts)
+
       facets = Product.facets(query, search_options)
       products = facets.for
       

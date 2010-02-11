@@ -25,8 +25,13 @@ class SphinxSearchExtension < Spree::Extension
         IF(price < 50, 1,
           IF(price < 100, 2,
             IF(price < 200, 3, 4))))
-eos
+    eos
+    
     price_sql = price_sql.gsub("\n", ' ').gsub('  ', '')
+    
+    is_active_sql = "((products.deleted_at IS NULL) AND (products.available_on <= NOW())"
+    is_active_sql += " AND (products.count_on_hand > 0)" unless Spree::Config[:allow_backorders]
+    is_active_sql += ")"
     
     Product.class_eval do
       define_index do
@@ -36,6 +41,7 @@ eos
         
         has taxons(:id), :as => :taxon_ids
         has price_sql, :as => :price_range, :type => :integer, :facet => true
+        has is_active_sql, :as => :is_active, :type => :integer
         has master.price, :as => :price, :type => :float
       end
     end
