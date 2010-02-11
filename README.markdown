@@ -12,6 +12,7 @@ Sphinx Search
         sudo apt-get install aspell libaspell-dev aspell-en
   
 1. `script/extension install git://github.com/romul/spree-sphinx-search.git`
+1. Copy config/sphinx.yml to RAILS_ROOT/config/sphinx.yml
 
 **NOTE:** This extension works only with Spree 0.9.99 and higher.
     
