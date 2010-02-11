@@ -1,0 +1,4 @@
+ru-RU:
+  taxon_facet: "Категория"
+  price_range_facet: "Цена"
+  did_you_mean: "Вы имели в виду"
