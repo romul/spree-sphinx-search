@@ -1,3 +1,6 @@
 en-US:
   taxon_facet: "Category"
   price_range_facet: "Price"
+  brand_option_facet: "Brand"
+  color_option_facet: "Color"
+  size_option_facet: "Size"
