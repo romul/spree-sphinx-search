@@ -22,6 +22,8 @@ module Spree::Search
       @properties[:products] = products
       @properties[:facets] = parse_facets_hash(facets)
       @properties[:suggest] = products.suggestion if products.suggestion?
+      @properties[:suggest] = nil if @properties[:suggest] == query
+      
       {:conditions=> ["products.id IN (?)", products.map(&:id)]}
     end
 
