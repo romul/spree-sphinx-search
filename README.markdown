@@ -5,17 +5,17 @@ Sphinx Search
 
 1. Install Sphinx 0.9.9
 1. Install Aspell 0.6 and at least one Aspell dictionary
-      Mac: 
+      Mac:
         sudo port install aspell aspell-dict-en
 
-      Ubuntu: 
+      Ubuntu:
         sudo apt-get install aspell libaspell-dev aspell-en
-  
-1. `script/extension install git://github.com/romul/spree-sphinx-search.git`
+
+1. `script/extension install git://github.com/pronix/spree-sphinx-search.git`
 1. Copy config/sphinx.yml to RAILS_ROOT/config/sphinx.yml
 
-**NOTE:** This extension works only with Spree 0.9.99 and higher.
-    
+**NOTE:** This extension works only with Spree 0.30 and higher.
+
 ### Usage
 
 To perform the indexing:
@@ -26,5 +26,3 @@ To start Sphinx for development:
 
     cd RAILS_ROOT/config
     sphinxd --config development.sphinx.conf
-
-
