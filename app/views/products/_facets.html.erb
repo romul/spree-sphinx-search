@@ -1,7 +1,7 @@
-<% 
-facets = Spree::Config.searcher.facets || []
+<%
+facets = @searcher.facets || []
 price_ranges = YAML::load(Spree::Config[:product_price_ranges])
-  for facet in facets 
+  for facet in facets
     options = facet.options
     options = options.sort{|x,y| y.count <=> x.count} unless facet.name == :price_range
     unless options.empty? %>
@@ -16,8 +16,8 @@ price_ranges = YAML::load(Spree::Config[:product_price_ranges])
               <%= link_to_facet(facet.name, option.name, option.count) -%>
             <% end -%>
           </li><%
-        end %> 
+        end %>
       </ul><%
     end
-  end 
+  end
 %>
