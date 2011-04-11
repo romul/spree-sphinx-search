@@ -10,7 +10,7 @@ Product.class_eval do
             LEFT JOIN option_values_variants AS ovv ON (ovv.option_value_id = ov.id)
             LEFT JOIN variants AS v ON (ovv.variant_id = v.id)
             LEFT JOIN products AS p ON (v.product_id = p.id)
-            WHERE (ot.name = '#{option_name}' AND p.id>=$start AND p.id<=$end);
+            WHERE (ot.name = '#{option_name}')
           eos
           sql.gsub("\n", ' ').gsub('  ', '')
         end
@@ -29,8 +29,8 @@ Product.class_eval do
         group_by :deleted_at
         group_by :available_on
         has is_active_sql, :as => :is_active, :type => :boolean
-        has brand_sql , :as => :brand_option, :source => :ranged_query, :type => :multi, :facet => true
-#        has color_sql , :as => :color_option, :source => :ranged_query, :type => :multi, :facet => true
-#        has size_sql , :as => :size_option, :source => :ranged_query, :type => :multi, :facet => true
+        has brand_sql , :as => :brand_option, :source => :query, :type => :multi, :facet => true
+#        has color_sql , :as => :color_option, :source => :query, :type => :multi, :facet => true
+#        has size_sql , :as => :size_option, :source => :query, :type => :multi, :facet => true
       end
 end
