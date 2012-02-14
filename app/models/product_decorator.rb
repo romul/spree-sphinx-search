@@ -1,9 +1,9 @@
-Product.class_eval do
-  class_inheritable_array :indexed_options
+Spree::Product.class_eval do
+  class_attribute :indexed_options
   self.indexed_options = []
 
   define_index do
-    is_active_sql = "(products.deleted_at IS NULL AND products.available_on <= NOW() #{'AND (products.count_on_hand > 0)' unless Spree::Config[:allow_backorders]} )"
+    is_active_sql = "(spree_products.deleted_at IS NULL AND spree_products.available_on <= NOW() #{'AND (spree_products.count_on_hand > 0)' unless Spree::Config[:allow_backorders]} )"
     option_sql = lambda do |option_name|
       sql = <<-eos
         SELECT DISTINCT p.id, ov.id

@@ -1,4 +1,4 @@
-ProductsController.class_eval do
+Spree::ProductsController.class_eval do
   helper :sphinx
   helper_method :option_values
   private
